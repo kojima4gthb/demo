@@ -14,3 +14,14 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function inputString(id) {
+    document.getElementById("disp").value += "●";
+    document.getElementById("pass").value += id + ",";
+    document.getElementById("disp").focus();
+}
+
+function resetPass() {
+    document.getElementById("pass").value = "";
+}
+

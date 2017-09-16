@@ -2,8 +2,14 @@
 
 one:
   name: MyString
-  age: 1
+  mail: MyString
+  password_digest: MyString
+  remember_token: MyString
+  keys: MyString
 
 two:
   name: MyString
-  age: 1
+  mail: MyString
+  password_digest: MyString
+  remember_token: MyString
+  keys: MyString

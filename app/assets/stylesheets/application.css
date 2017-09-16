@@ -13,3 +13,27 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height:1.4;
+    color:#333;
+    font-family:Arial, sans-serif;
+    font-size:0.9em;
+}
+table.header {
+    background-color: #777777;
+}
+td.header_left {
+    width: 200px;
+}
+td.header_right {
+    width: 100%;
+}
+
+/* メイン画面の左に隙間を表示 */
+td.main_dummy {
+    width: 100px;
+    table-layout: fixed;
+}

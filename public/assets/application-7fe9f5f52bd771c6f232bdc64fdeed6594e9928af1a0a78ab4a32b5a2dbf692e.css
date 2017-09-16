@@ -1,0 +1,79 @@
+/* line 3, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list {
+  display: table;
+  table-layout: fixed;
+  width: 350px;
+  padding-bottom: 4px;
+  -ms-user-select: none;
+  /* IE 10+ */
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* line 9, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list li {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  background-color: white;
+  border-left: 1px solid white;
+}
+/* line 16, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list li a {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+/* line 21, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list li a img {
+  opacity: 0.6;
+  transition: 0.5s;
+}
+/* line 27, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list li a:hover img {
+  opacity: 1;
+}
+/* line 33, /myapp/app/assets/stylesheets/logins.scss */
+ul.input_list li:first-child {
+  border: none;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+
+
+body {
+    margin: 0;
+    padding: 0;
+    line-height:1.4;
+    color:#333;
+    font-family:Arial, sans-serif;
+    font-size:0.9em;
+}
+table.header {
+    background-color: #777777;
+}
+td.header_left {
+    width: 200px;
+}
+td.header_right {
+    width: 100%;
+}
+
+/* メイン画面の左に隙間を表示 */
+td.main_dummy {
+    width: 100px;
+    table-layout: fixed;
+}

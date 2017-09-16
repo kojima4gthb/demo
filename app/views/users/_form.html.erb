@@ -17,8 +17,23 @@
   </div>
 
   <div class="field">
-    <%= f.label :age %>
-    <%= f.number_field :age %>
+    <%= f.label :mail %>
+    <%= f.text_field :mail %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_digest %>
+    <%= f.text_field :password_digest %>
+  </div>
+
+  <div class="field">
+    <%= f.label :remember_token %>
+    <%= f.text_field :remember_token %>
+  </div>
+
+  <div class="field">
+    <%= f.label :keys %>
+    <%= f.text_field :keys %>
   </div>
 
   <div class="actions">
