@@ -1,0 +1,39 @@
+%article
+  %h2 Listing blogs
+
+  =@entry.blog.title
+  %br
+  %br
+
+  %p
+    %b Title:
+    = @entry.title
+  %p
+    %b Body:
+    = @entry.body
+
+  = link_to 'Edit Entry', edit_blog_entry_path(@entry.blog, @entry)
+  \|
+  = link_to 'Back', blog_path(@entry.blog)
+  %br
+  %br
+
+  %table
+    %thead
+      %tr
+        %th Body
+        %th Status
+        %th
+
+    %tbody
+      - @entry.comments.each do |comment|
+        %tr
+          %td= (comment.status.eql? 'unapproved') ? label_tag('(承認待ち)') + comment.body : comment.body
+          %td= (comment.status.eql? 'unapproved') ? link_to('Approve', approve_blog_entry_comment_path(@entry.blog, @entry, comment), method: 'PATCH') : label_tag('       ')
+          %td= link_to 'Destroy', blog_entry_comment_path(@entry.blog, @entry, comment.id), method: :delete, data: { confirm: 'Are you sure?' }
+  %p#notice= notice
+  %br
+  %h4 New comment
+
+  = render 'form_comment'
+

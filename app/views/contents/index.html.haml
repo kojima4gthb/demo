@@ -1,0 +1,700 @@
+%article
+  %h2= 'Rubyの基本を理解する'
+  %br
+  %section
+    %h3= '♫ 三角形の形を求める'
+    %br
+    = form_tag({ action: 'tri' }, remote: true) do
+      = text_field_tag :tri_len0
+      = text_field_tag :tri_len1
+      = text_field_tag :tri_len2
+      = submit_tag '形は？', name: 'btn_tri_shape'
+      %label#tri_shape
+      %br
+      %div.code_frame
+        <pre>require File.expand_path(File.dirname(__FILE__) + '/../../../app/controllers/concerns/triangle')
+        \
+        \describe Triangle do
+        \  # min - max
+        \  specify { expect(Triangle.triangle_shape(1,1,1)).to eq '正三角形' }
+        \  specify { expect(Triangle.triangle_shape(4611686018427387904,
+        \                                           4611686018427387904,
+        \                                           4611686018427387904)).to eq '正三角形' }
+        \
+        \  # ３辺が最も短い長さで場合分け
+        \  specify { expect{Triangle.triangle_shape(0, 1, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 0, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 1, 0)}.to raise_error(ArgumentError) }
+        \  specify { expect(Triangle.triangle_shape(2, 3, 4)).to eq '不等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(4, 2, 3)).to eq '不等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(3, 4, 2)).to eq '不等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(1, 2, 2)).to eq '二等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(2, 1, 2)).to eq '二等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(2, 2, 1)).to eq '二等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(1, 2, 1)).to eq '非三角形' }
+        \  specify { expect(Triangle.triangle_shape(1, 1, 2)).to eq '非三角形' }
+        \  specify { expect(Triangle.triangle_shape(2, 1, 1)).to eq '非三角形' }
+        \  specify { expect{Triangle.triangle_shape(nil, 1, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, nil, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 1, nil)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape('A', 1, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 'A', 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 1, 'A')}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1.1, 1, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 1.1, 1)}.to raise_error(ArgumentError) }
+        \  specify { expect{Triangle.triangle_shape(1, 1, 1.1)}.to raise_error(ArgumentError) }
+        \
+        \  # 1,2,2 長い辺2本 <-> 2,2,3 短い辺2本
+        \  specify { expect(Triangle.triangle_shape(1, 2, 2)).to eq '二等辺三角形' }
+        \  specify { expect(Triangle.triangle_shape(2, 2, 3)).to eq '二等辺三角形' }
+        \end
+        </pre>
+  %section
+    %h3= '♫ エラトステネスのふるい'
+    %br
+    = form_tag({ action: 'era' }, remote: true) do
+      = text_field_tag :era_max_num
+      = submit_tag 'までの素数リストは？', name: 'btn_prime_list'
+      %label#prime_list
+      %br
+      %div.code_frame
+        <pre>---------- code ----------
+        \~~~省略~~~
+        \# 2~maxまでの配列を作成
+        \lists = (2..max).to_a
+        \
+        \# maxの平方根までループ
+        \2.upto(Math.sqrt(max)) do |num|
+        \  # 素数の倍数を削除
+        \  lists.reject! { |list|
+        \    ((list % num).eql? 0) && (list > num)
+        \  }
+        \end
+        \~~~省略~~~
+        \---------- test ----------
+        \require File.expand_path(File.dirname(__FILE__) + '/../../../app/controllers/concerns/eratosthenes')
+        \
+        \describe Eratosthenes do
+        \  specify { expect{Eratosthenes.prime_number_list(1)}.to raise_error(ArgumentError) }
+        \  specify { expect(Eratosthenes.prime_number_list(2)).to eq [2] }
+        \  specify { expect(Eratosthenes.prime_number_list(3)).to eq [2, 3] }
+        \  specify { expect(Eratosthenes.prime_number_list(10)).to eq [2, 3, 5, 7] }
+        \  specify { expect(Eratosthenes.prime_number_list(20)).to eq [2, 3, 5, 7, 11, 13, 17, 19] }
+        \  specify { expect(Eratosthenes.prime_number_list(30)).to eq [2, 3, 5, 7, 11, 13, 17, 19, 23, 29] }
+        \  specify { expect{Eratosthenes.prime_number_list(nil)}.to raise_error(ArgumentError) }
+        \  specify { expect{Eratosthenes.prime_number_list('A')}.to raise_error(ArgumentError) }
+        \  specify { expect{Eratosthenes.prime_number_list(1.1)}.to raise_error(ArgumentError) }
+        \end
+
+%article
+  %h2= 'Webアプリ開発の基本を理解する'
+  %br
+  %section
+    %h3= '♫ ブラウザとサーバがどうやって通信しているかを理解する'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>newアクションでauthenticity_tokenをメモしてPOST,PUTで使用
+        \curl -X GET https://tryout.sonicgarden.jp/lc/sample/messages/new
+        \  ↓
+        \curl -H "Content-Type: application/json" -X POST -d '{"utf8":"✓", "authenticity_token":"q9Ee/nxICclvNUdNtKCM74c5DxSFF+2yIXrxxy0bmjZnMxXkVhim/fr0YFC3QExq0w2BK995c4YbAACG1PoD3A==", "lecture_sample_message":{"user":"kojima1234", "text":"tryout2017"}, "commit":"Save"}' https://tryout.sonicgarden.jp/lc/sample/messages
+        \  ↓
+        \curl -X GET https://tryout.sonicgarden.jp/lc/sample/messages/273
+        \  ↓
+        \curl -H "Content-Type: application/json" -X PUT -d '{"utf8":"✓", "authenticity_token":"q9Ee/nxICclvNUdNtKCM74c5DxSFF+2yIXrxxy0bmjZnMxXkVhim/fr0YFC3QExq0w2BK995c4YbAACG1PoD3A==", "lecture_sample_message":{"user":"kojima1234_U", "text":"tryout2017_U"}, "commit":"Save", "id":"273"}' https://tryout.sonicgarden.jp/lc/sample/messages/273
+        \  ↓
+        \curl -X DELETE https://tryout.sonicgarden.jp/lc/sample/messages/273
+        \  ↓
+        \以下足跡残しのため、再度登録
+        \curl -H "Content-Type: application/json" -X POST -d '{"utf8":"✓", "authenticity_token":"q9Ee/nxICclvNUdNtKCM74c5DxSFF+2yIXrxxy0bmjZnMxXkVhim/fr0YFC3QExq0w2BK995c4YbAACG1PoD3A==", "lecture_sample_message":{"user":"kojima1234", "text":"tryout2017"}, "commit":"Save"}' https://tryout.sonicgarden.jp/lc/sample/messages
+        \  ↓
+        \curl -X GET https://tryout.sonicgarden.jp/lc/sample/messages/274
+  %section
+    %h3= '♫ HTMLを書けるようになる'
+    %br
+    = form_tag main_path do
+      = link_to 'リンク', '/program.html#ruby', target: '_blank'
+  %br
+  %section
+    %h3= '♫ JavaScriptでインタラクティブな動きを加えられるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>$(function(){
+        \  // "nav"を非表示
+        \  $("nav").css("display", "none");
+        \
+        \  // "btn-flow"がクリックされた場合
+        \  $(".btn-flow").click(function() {
+        \    // "nav"の表示、非表示を切り替える
+        \    $("nav").toggle();
+        \  });
+        \
+        \  // "btn-up"がクリックされた場合
+        \  $(".btn-up").click(function() {
+        \    $(window).scrollTop($(window).scrollTop() - 100);
+        \  });
+        \
+        \  // "btn-down"がクリックされた場合
+        \  $(".btn-down").click(function() {
+        \    $(window).scrollTop($(window).scrollTop() + 100);
+        \  });
+        \});
+%article
+  %h2= 'Ruby on Railsの基本を理解する その１'
+  %br
+  %section
+    %h3= '♫ 2つのモデルの関連からデータを引き出せるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- コマンド ----------
+        \
+        \rails generate model entry title:string body:text
+        \rails generate model comment body:text status:string entry_id:integer
+        \
+      %div.code_frame
+        <pre>---------- Hirbコマンド(登録) ----------
+        \
+        \entry = Entry.create(title: "\u306F\u3058\u3081\u3066\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u306F\u3058\u3081\u307E\u3057\u3066\uFF01")
+        \comment = entry.comments.create(body: "\u3066\u3059\u3066\u3059", status: "approved", entry_id: 1)
+        \entry.comments[0].body
+        \comment = entry.comments.create(body: "\u3069\u3046\u3082\u3069\u3046\u3082", status: "unapproved", entry_id: 1)
+        \entry.comments[1].body
+        \entry.comments.size
+        \
+        \entry = Entry.create(title: "\u0032\u756A\u76EE\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u304A\u3072\u3055\u3057\u3076\u308A\u3067\u3059\uFF01")
+        \entry.comments.size
+        \
+        \entry = Entry.create(title: "\u0033\u756A\u76EE\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u3082\u3046\u304F\u3058\u3051\u307E\u3057\u305F\u30FB\u30FB\u30FB")
+        \comment = entry.comments.create(body: "\u3053\u3093\u306B\u3061\u306F\u3053\u3093\u306B\u3061\u306F\uFF01", status: "approved", entry_id: 3)
+        \entry.comments[0].body
+        \entry.comments.size
+        \
+      %div.code_frame
+        <pre>---------- Hirbコマンド(取得) ----------
+        \
+        \***** Entryのid:1(title:はじめてのエントリー)に紐づくCommentを表示 *****
+        \
+        \Entry.find(37).comments.select("id, body, status, entry_id")
+        \  Entry Load (0.5ms)  SELECT  "entries".* FROM "entries" WHERE "entries"."id" = $1 LIMIT $2  [["id", 37], ["LIMIT", 1]]
+        \  Comment Load (0.6ms)  SELECT id, body, status, entry_id FROM "comments" WHERE "comments"."entry_id" = $1  [["entry_id", 37]]
+        \  +----+--------------+------------+----------+
+        \  | id | body         | status     | entry_id |-
+        \  +----+--------------+------------+----------+
+        \  | 1  | てすてす      | approved   | 37       |-
+        \  | 2  | どうもどうも   | unapproved | 37       |-
+        \  +----+--------------+------------+----------+
+        \
+      %div.code_frame
+        <pre>***** statusがunapprovedであるCommentがあるEntryを表示 その１ *****
+        \
+        \entries = Entry.joins(:comments).where(comments: {status: "unapproved"})
+        \  Entry Load (0.9ms)  SELECT "entries".* FROM "entries" INNER JOIN "comments" ON "comments"."entry_id" = "entries"."id" WHERE "comments"."status" = $1  [["status", "unapproved"]]
+        \  +----+----------------------+----------------+-------------------------+-------------------------+
+        \  | id | title                | body           | created_at              | updated_at              |-
+        \  +----+----------------------+----------------+-------------------------+-------------------------+
+        \  | 37 | はじめてのエントリー     | はじめまして！   | 2017-10-15 08:41:47 UTC | 2017-10-15 08:41:47 UTC |-
+        \  +----+----------------------+----------------+-------------------------+-------------------------+
+        \
+        \Entry.where(id: entries).select("id, title, body")
+        \  Entry Load (1.3ms)  SELECT id, title, body FROM "entries" WHERE "entries"."id" IN (SELECT "entries"."id" FROM "entries" INNER JOIN "comments" ON "comments"."entry_id" = "entries"."id" WHERE "comments"."status" = $1)  [["status", "unapproved"]]
+        \  +----+----------------------+----------------+
+        \  | id | title                | body           |-
+        \  +----+----------------------+----------------+
+        \  | 37 | はじめてのエントリー     | はじめまして！   |-
+        \  +----+----------------------+----------------+
+        \
+      %div.code_frame
+        <pre>***** statusがunapprovedであるCommentがあるEntryを表示 その２ *****
+        \
+        \entries = Comment.where(status: "unapproved").select("entry_id")
+        \  Comment Load (0.8ms)  SELECT "comments"."entry_id" FROM "comments" WHERE "comments"."status" = $1  [["status", "unapproved"]]
+        \  +----+----------+
+        \  | id | entry_id |-
+        \  +----+----------+
+        \  |    | 37       |-
+        \  +----+----------+
+        \
+        \Entry.where(id: entries).select("id, title, body")
+        \  Entry Load (1.3ms)  SELECT id, title, body FROM "entries" WHERE "entries"."id" IN (SELECT "comments"."entry_id" FROM "comments" WHERE "comments"."status" = $1)  [["status", "unapproved"]]
+        \  +----+----------------------+----------------+
+        \  | id | title                | body           |-
+        \  +----+----------------------+----------------+
+        \  | 37 | はじめてのエントリー     | はじめまして！   |-
+        \  +----+----------------------+----------------+
+  %section
+    %h3= '♫ もう少し複雑なモデルの関連を作れるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- コマンド ----------
+        \
+        \rails generate model blog title:string
+        \rails generate model entry title:string body:text blog_id:integer
+        \rails generate model comment body:text status:string entry_id:integer
+        \
+      %div.code_frame
+        <pre>---------- Hirbコマンド(登録) ----------
+        \
+        \blog = Blog.create(title: "\u306D\u3053\u304C\u3059\u304D\uFF01\u306B\u3083\u3093\u306B\u3083\u3093\u30D6\u30ED\u30B0")
+        \entry = blog.entries.create(title: "\u306F\u3058\u3081\u3066\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u306F\u3058\u3081\u307E\u3057\u3066\uFF01", blog_id: 1)
+        \comment = entry.comments.create(body: "\u3066\u3059\u3066\u3059", status: "approved", entry_id: 1)
+        \comment = entry.comments.create(body: "\u306D\u3053\u306F\u304B\u308F\u3044\u3044\u3067\u3059\u3088\u306D", status: "unapproved", entry_id: 1)
+        \entry = blog.entries.create(title: "\u0032\u756A\u76EE\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u304A\u3072\u3055\u3057\u3076\u308A\u3067\u3059\uFF01", blog_id: 1)
+        \comment = entry.comments.create(body: "\u4F8B\u306E\u306D\u3053\u306B\u3064\u3044\u3066", status: "approved", entry_id: 2)
+        \
+        \blog = Blog.create(title: "\u3044\u306C\u304C\u3059\u304D\uFF01\u308F\u3093\u308F\u3093\u30D6\u30ED\u30B0")
+        \
+        \blog = Blog.create(title: "\u3064\u307E\u304C\u3059\u304D\uFF01\u3044\u3068\u3046\u3055\u3093\u30D6\u30ED\u30B0")
+        \entry = blog.entries.create(title: "\u0033\u756A\u76EE\u306E\u30A8\u30F3\u30C8\u30EA\u30FC", body: "\u3082\u3046\u304F\u3058\u3051\u307E\u3057\u305F\u30FB\u30FB\u30FB", blog_id: 3)
+        \comment = entry.comments.create(body: "\u3053\u3093\u306B\u3061\u306F\u3053\u3093\u306B\u3061\u306F\uFF01", status: "approved", entry_id: 3)
+        \
+      %div.code_frame
+        <pre>---------- Hirbコマンド(取得) ----------
+        \
+        \***** Blogのid:1に紐づくすべてのCommentを表示 *****
+        \
+        \entryids = Blog.find(1).entries
+        \Comment.select("id, body, status, entry_id").where(entry_id: entryids)
+        \
+        \  Comment Load (0.5ms)  SELECT id, body, status, entry_id FROM "comments" WHERE "comments"."entry_id" IN (SELECT "entries"."id" FROM "entries" WHERE "entries"."blog_id" = $1)  [["blog_id", 1]]
+        \  +----+------------------------+------------+----------+
+        \  | id | body                   | status     | entry_id |-
+        \  +----+------------------------+------------+----------+
+        \  | 1  | てすてす                 | approved  | 1        |-
+        \  | 2  | ねこはかわいいですよね     | unapproved | 1        |-
+        \  | 3  | 例のねこについて          | approved   | 2        |-
+        \  +----+------------------------+------------+----------+
+        \
+      %div.code_frame
+        <pre>***** まだEntryを書いていないBlogを表示 *****
+        \
+        \blogids = Entry.select("blog_id")
+        \Blog.select("id, title").where.not(id: blogids)
+        \
+        \  Blog Load (0.8ms)  SELECT id, title FROM "blogs" WHERE ("blogs"."id" NOT IN (SELECT "entries"."blog_id" FROM "entries"))
+        \  +----+----------------------------+
+        \  | id | title                      |-
+        \  +----+----------------------------+
+        \  | 2  | いぬがすき！わんわんブログ     |-
+        \  +----+----------------------------+
+        \
+      %div.code_frame
+        <pre>***** statusがunapprovedであるCommentがあるEntryのあるBlogを表示 *****
+        \
+        \entryids = Comment.select("entry_id").where(status: "unapproved")
+        \blogids = Entry.select("blog_id").where(id: entryids)
+        \Blog.select("id, title").where(id: blogids)
+        \
+        \  Blog Load (0.8ms)  SELECT id, title FROM "blogs" WHERE "blogs"."id" IN (SELECT "entries"."blog_id" FROM "entries" WHERE "entries"."id" IN (SELECT "comments"."entry_id" FROM "comments" WHERE "comments"."status" = $1))  [["status", "unapproved"]]
+        \  +----+--------------------------------+
+        \  | id | title                          |-
+        \  +----+--------------------------------+
+        \  | 1  | ねこがすき！にゃんにゃんブログ      |-
+        \  +----+--------------------------------+
+%article
+  %h2= 'Ruby on Railsの基本を理解する その２'
+  %br
+  %section
+    %h3= '♫ Haml / Sass / CoffeeScriptでビューを書けるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>JQueryをCoffeeScriptで書く
+        \
+        \---------- common.coffee ----------
+        \$ ->
+        \  # "nav"を非表示
+        \  $('nav').css('display', 'none')
+        \
+        \  # "btn-flow"がクリックされた場合
+        \  $('.btn-flow').on('click', ->
+        \    $('nav').toggle()
+        \  )
+        \
+        \  # "btn-up"がクリックされた場合
+        \  $('.btn-up').on('click', ->
+        \    $(window).scrollTop($(window).scrollTop() - 100)
+        \  )
+        \
+        \  # "btn-down"がクリックされた場合
+        \  $('.btn-down').on('click', ->
+        \    $(window).scrollTop($(window).scrollTop() + 100)
+        \  )
+  %section
+    %h3= '♫ 応用的な画面やフォームを作成できるようになる'
+    %br
+    = form_tag main_path do
+      = link_to 'blog', blogs_path
+    %br
+  %section
+    %h3= '♫ メールを送信できるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- development.rb ----------
+        \
+        \  config.action_mailer.raise_delivery_errors = true
+        \  config.action_mailer.delivery_method = :smtp
+        \  config.action_mailer.smtp_settings = {
+        \    enable_starttls_auto: true,
+        \    address:              'smtp.mail.yahoo.co.jp',
+        \    port:                 587,
+        \    domain:               'mail.yahoo.co.jp',
+        \    authentication:       :plain,
+        \    user_name:            'name1234567890',
+        \    password:             'pass1234567890'
+        \  }
+        \  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+        \
+      %div.code_frame
+        <pre>---------- comments_controller.rb ----------
+        \  #  コメント作成アクション
+        \  def create
+        \    return unless correct_routes?(%w(entries show))
+        \
+        \    @entry = @blog.entries.find(params[:entry_id])
+        \    @comment = @entry.comments.create(comment_params)
+        \    @comment.status = 'unapproved'
+        \    respond_to do |format|
+        \      if @comment.save
+        \        format.html {
+        \          # メール送信 クエリ文字列'?permission=admin'で直リンク可能
+        \          send_mail([@blog.title, @entry.title, @comment.body,
+        \                    blog_entry_url(@blog, @entry, host: request.host) + '?permission=admin'])
+        \          redirect_to blog_entry_path(@blog, @entry), notice: 'Comment was successfully created.'
+        \        }
+        \      else
+        \        format.html { redirect_to blog_entry_path(@blog, @entry), notice: 'Comment was not created.' }
+        \      end
+        \    end
+        \  end
+        \
+      %div.code_frame
+        <pre>---------- application_controller.rb ----------
+        \
+        \  private
+        \    def send_mail(bodys)
+        \      NoticeMailer.sendmail_confirm(bodys).deliver
+        \    end
+        \
+      %div.code_frame
+        <pre>---------- notice_mailer.rb ----------
+        \
+        \class NoticeMailer < ActionMailer::Base
+        \  default from: 'noreply@example.com'
+        \  def sendmail_confirm(bodys)
+        \    @bodys = bodys
+        \    mail to: 'admin@example.com',
+        \      subject: '新しいコメントが投稿されました。',
+        \  end
+        \end
+        \
+      %div.code_frame
+        <pre>---------- sendmail_confirm.text.erb ----------
+        \
+        \新しいコメントが登録されました。
+        \
+        \承認または削除してください。
+        \
+        \Blog: <%= @bodys[0] %>
+        \Entry: <%= @bodys[1] %>
+        \Comment: <%= @bodys[2] %>
+        \
+        \URL: <%= @bodys[3] %>
+        \
+      %div.code_frame
+        <pre>---------- mail body ----------
+        \
+        \新しいコメントが登録されました。
+        \
+        \承認または削除してください。
+        \
+        \Blog: 宇宙の謎
+        \Entry: ブラックホールについて
+        \Comment: XXX
+        \
+        \URL: http://localhost:3000/blogs/24/entries/34?permission=admin
+        \
+      %div.code_frame
+        <pre>---------- entries_controller.rb ----------
+        \  # 上記のURL押下で呼ばれるアクション
+        \  def show
+        \    # permission=adminなら直リンク可能（親のコントローラ、アクションのチェックなし）
+        \    unless params[:permission].eql? 'admin'
+        \      return unless correct_routes?(%w(blogs show), %w(entries edit), %w(entries show))
+        \    end
+        \
+        \    @comments = @blog.entries.find(@entry.id).comments
+        \    @comment = Comment.new
+        \  end
+        \
+%article
+  %h2= 'Ruby on Railsの基本を理解する その３'
+  %br
+  %section
+    %h3= '♫ モデルのテストコードを書けるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- blog_spec.rb ----------
+        \
+        \require 'rails_helper'
+        \
+        \describe Blog do
+        \  it 'titleがあれば有効な状態であること' do
+        \    blog = Blog.new(title: 'Blog')
+        \    expect(blog.valid?).to be_truthy
+        \  end
+        \
+        \  it 'titleがなければ無効な状態であること' do
+        \    blog = Blog.new(title: '')
+        \    expect(blog.valid?).to be_falsey
+        \    expect(blog.errors.full_messages[0]).to eq "Title can't be blank"
+        \  end
+        \end
+      %div.code_frame
+        <pre>---------- entry_spec.rb ----------
+        \
+        \require 'rails_helper'
+        \
+        \describe Entry do
+        \  context '親のblogがある場合' do
+        \    let(:blog) { Blog.new(title: 'Blog') }
+        \
+        \    it 'titleがあれば有効な状態であること' do
+        \      entry = blog.entries.new(title: 'Entry')
+        \      expect(entry.valid?).to be_truthy
+        \    end
+        \    it 'titleがなければ無効な状態であること' do
+        \      entry = blog.entries.new(title: '')
+        \      expect(entry.valid?).to be_falsey
+        \      expect(entry.errors.full_messages[0]).to eq "Title can't be blank"
+        \      end
+        \    end
+        \
+        \  context '親のblogがない場合' do
+        \    it 'titleが『あっても』無効な状態であること' do
+        \      entry = Entry.new(title: 'Entry')
+        \      expect(entry.valid?).to be_falsey
+        \      expect(entry.errors.full_messages[0]).to eq 'Blog must exist'
+        \    end
+        \    it 'titleがなければ無効な状態であること' do
+        \      entry = Entry.new(title: '')
+        \      expect(entry.valid?).to be_falsey
+        \      expect(entry.errors.full_messages[0]).to eq 'Blog must exist'
+        \    end
+        \  end
+        \end
+      %div.code_frame
+        <pre>---------- comment_spec.rb ----------
+        \
+        \require 'rails_helper'
+        \
+        \describe Entry do
+        \  context '親のentryがある場合' do
+        \    let(:blog) { Blog.new(title: 'Blog') }
+        \    let(:entry) { blog.entries.new(title: 'Entry') }
+        \
+        \    it 'bodyがあれば有効な状態であること' do
+        \      comment = entry.comments.new(body: 'Comment')
+        \      expect(comment.valid?).to be_truthy
+        \    end
+        \    it 'bodyがなければ無効な状態であること' do
+        \      comment = entry.comments.new(body: '')
+        \      expect(comment.valid?).to be_falsey
+        \      expect(comment.errors.full_messages[0]).to eq "Body can't be blank"
+        \    end
+        \  end
+        \
+        \  context '親のentryがない場合' do
+        \    it 'bodyが『あっても』無効な状態であること' do
+        \      comment = Comment.new(body: 'Comment')
+        \      expect(comment.valid?).to be_falsey
+        \      expect(comment.errors.full_messages[0]).to eq 'Entry must exist'
+        \    end
+        \    it 'bodyがなければ無効な状態であること' do
+        \      comment = Comment.new(body: '')
+        \      expect(comment.valid?).to be_falsey
+        \      expect(comment.errors.full_messages[0]).to eq 'Entry must exist'
+        \    end
+        \  end
+        \end
+%article
+  %h2= 'Ruby on Railsの基本を理解する その４'
+  %br
+  %section
+    %h3= '♫ コントローラのテストコードを書けるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- blogs_controller_spec.rb ----------
+        \
+        \require 'rails_helper'
+        \
+        \describe BlogsController do
+        \
+        \  describe 'Get #index' do
+        \    before do
+        \      @blogs = [create(:blog, title: 'ねこがすき！にゃんにゃんブログ'),
+        \                create(:blog, title: 'いぬがすき！わんわんブログ'),
+        \                create(:blog, title: 'つまがすき！いとうさんブログ')]
+        \      get 'index', params: {}, session: {}
+        \    end
+        \    it '@blogsに全てのBlogが入っていること' do
+        \      expect(assigns(:blogs)).to match_array(@blogs)
+        \    end
+        \    it 'indexテンプレートを表示すること' do
+        \      expect(response).to render_template :index
+        \    end
+        \    it 'レスポンス200を返すこと'  do
+        \      expect(response).to have_http_status(:ok)
+        \    end
+        \  end
+        \
+        \  describe 'Get #show' do
+        \    before do
+        \      @blog = create(:blog)
+        \      @blog.entries.create(title: 'はじめてのエントリー', body: 'はじめまして！')
+        \      @blog.entries.create(title: '2番目のエントリー', body: 'おひさしぶりです！')
+        \    end
+        \    context '遷移元が正しい場合' do
+        \      before do
+        \        request.env['HTTP_REFERER'] = 'http://localhost:3000/blogs'
+        \        get 'show', params: { id: @blog.id }, session: {}
+        \      end
+        \      it '@blogに表示するBlogが入っていること' do
+        \        expect(assigns(:blog)).to eq @blog
+        \      end
+        \      it 'session[:blog_title]に表示するタイトルが入っていること' do
+        \        expect(session[:blog_title]).to eq @blog.title
+        \      end
+        \      it 'showテンプレートを表示すること' do
+        \        expect(response).to render_template :show
+        \      end
+        \      it 'レスポンス200を返すこと'  do
+        \        expect(response).to have_http_status(:ok)
+        \      end
+        \    end
+        \    context '遷移元が親子以外の場合' do
+        \      before do
+        \        request.env['HTTP_REFERER'] = 'http://localhost:3000/top'
+        \        get 'show', params: { id: @blog.id }, session: {}
+        \      end
+        \      it 'blogsのindexに遷移すること' do
+        \        expect(response).to redirect_to blogs_path
+        \      end
+        \      it 'レスポンス302を返すこと'  do
+        \        expect(response).to have_http_status(:found)
+        \      end
+        \    end
+        \    context '遷移元が不正な場合' do
+        \      before do
+        \        request.env['HTTP_REFERER'] = 'http://test.co.jp'
+        \        get 'show', params: { id: @blog.id }, session: {}
+        \      end
+        \      it 'blogsのindexに遷移すること' do
+        \        expect(response).to redirect_to blogs_path
+        \      end
+        \      it 'レスポンス302を返すこと'  do
+        \        expect(response).to have_http_status(:found)
+        \      end
+        \    end
+        \  end
+%article
+  %h2= 'Ruby on Railsの基本を理解する その５'
+  %br
+  %section
+    %h3= '♫ 結合テストのコードを書けるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- blogs_spec.rb ----------
+        \
+        \require 'rails_helper'
+        \
+        \feature 'Blog管理' do
+        \  background do
+        \    # Blogを作成する
+        \    @blog = Blog.create!(title: 'ねこがすき！にゃんにゃんブログ')
+        \    visit blogs_path
+        \  end
+        \  context '新規作成の場合' do
+        \    background do
+        \      # 新規作成ページを開く
+        \      click_link 'New Blog'
+        \    end
+        \    scenario 'Blogの新規作成時にtitleを入力しなかった場合にエラーが表示されること' do
+        \      # 新規作成フォームにタイトルを入力しない
+        \      fill_in 'Title', with: ''
+        \      # Saveボタンをクリックする
+        \      expect {
+        \        click_button 'Save'
+        \      }.to change(Blog, :count).by(0)
+        \      # ブログ一覧画面に遷移したことを検証する
+        \      expect(current_path).to eq blogs_path
+        \      expect(page).to have_content "Title can't be blank"
+        \    end
+        \    scenario 'Blogの新規作成時にtitleを入力した場合はデータが保存され一覧画面に遷移すること' do
+        \      # 新規作成フォームにタイトルを入力する
+        \      fill_in 'Title', with: 'いぬがすき！わんわんブログ'
+        \      # Saveボタンをクリックする
+        \      expect {
+        \        click_button 'Save'
+        \      }.to change(Blog, :count).by(1)
+        \      # ブログ一覧画面に遷移したことを検証する
+        \      expect(current_path).to eq blogs_path
+        \      expect(page).to have_content 'Blog was successfully created.'
+        \    end
+        \  end
+        \  context '更新の場合' do
+        \    background do
+        \      # 更新ページを開く
+        \      click_link 'Edit'
+        \    end
+        \    scenario 'Blogの更新時にtitleを空白にした場合にエラーが表示されること' do
+        \      # 更新フォームにタイトルを入力しない
+        \      fill_in 'Title', with: ''
+        \      # Saveボタンをクリックする
+        \      expect {
+        \        click_button 'Save'
+        \      }.to change(Blog, :count).by(0)
+        \      # ブログ閲覧画面に遷移したことを検証する
+        \      expect(current_path).to eq blog_path(@blog)
+        \      expect(page).to have_content "Title can't be blank"
+        \    end
+        \    scenario 'Blogの更新時にtitleを入力した場合はデータが保存され閲覧画面に遷移すること' do
+        \      # 更新フォームのタイトルを更新する
+        \      fill_in 'Title', with: 'ねこがすき！にゃんにゃんブログ【改】'
+        \      # Saveボタンをクリックする
+        \      expect {
+        \        click_button 'Save'
+        \      }.to change(Blog, :count).by(0)
+        \      # ブログ閲覧画面に遷移したことを検証する
+        \      expect(current_path).to eq blog_path(@blog)
+        \      expect(page).to have_content 'Blog was successfully updated.'
+        \    end
+        \  end
+        \end
+%article
+  %h2= 'Ruby on RailsアプリをHerokuで動かす'
+  %br
+  %section
+    %h3= '♫ Heroku Addonを利用できるようになる'
+    = form_tag main_path do
+      %div.code_frame
+        <pre>---------- production.rb ----------
+        \
+        \  config.action_mailer.delivery_method = :smtp
+        \  config.action_mailer.perform_deliveries = true
+        \  config.action_mailer.smtp_settings = {
+        \      user_name: ENV['SENDGRID_USERNAME'],
+        \      password: ENV['SENDGRID_PASSWORD'],
+        \      domain: 'heroku.com',
+        \      address: 'smtp.sendgrid.net',
+        \      port: 587,
+        \      authentication: :plain,
+        \      enable_starttls_auto: true
+        \  }
+  %br
+  %h2= 'データモデリング'
+  %br
+  %section
+    %h3= '♫ データモデリング入門'
+    %br
+    = form_tag main_path do
+      = link_to 'リンク', '/modeling.html', target: '_blank'
+%br
+%br

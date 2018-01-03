@@ -1,3 +1,23 @@
-// Place all the styles related to the contents controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.code_frame {
+  border-radius:3px;
+  margin:1em 0;
+  background-color:#f7f7f7;
+  line-height:0;
+//  overflow:hidden
+  width: auto;
+
+  pre {
+    border-radius:3px;
+    border:0;
+    margin:0;
+    padding:.6em 1.2em;
+    line-height:1.2;
+    background-color:#f7f7f7;
+    overflow-x:auto;
+    word-wrap:normal;
+    white-space:pre;
+    font-size:.8em;
+    font-family:Consolas,Liberation Mono,Menlo,Courier,monospace
+  }
+}

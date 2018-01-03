@@ -1,24 +1,11 @@
-
 // リストの横表示
-ul.input_list {
-  display:table;
-  table-layout:fixed;
-  width:200px;
-  padding-bottom: 4px;
+ul.input-list {
+  width: 220px;
 
   li {
-    display:block;
-    float:left;
-    vertical-align:middle;
-    text-align:left;
-    background-color: white;
-    border-left:1px solid white;
+    display: inline-block;
 
     a {
-      display:block;
-      text-decoration:none;
-      color:white;
-
       img {
         opacity: 0.6 ;
         transition: 0.5s ;
@@ -30,9 +17,6 @@ ul.input_list {
         opacity: 1.0 ;
       }
     }
-  }
-  li:first-child {
-    border:none;
   }
 
   // 選択不可にする対応

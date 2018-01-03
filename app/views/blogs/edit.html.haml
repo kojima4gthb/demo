@@ -1,0 +1,10 @@
+%article
+  %h2 Listing blogs
+  %p
+    %b Editing blog
+
+  = render 'form'
+
+  = link_to 'Show', @blog
+  \|
+  = link_to 'Back', blogs_path

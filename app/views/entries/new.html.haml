@@ -1,0 +1,9 @@
+%article
+  %h2 Listing blogs
+  %p
+    %b New entry :
+    =session[:blog_title]
+
+  = render 'form_create'
+
+  = link_to 'Back', blog_path(@entry.blog)

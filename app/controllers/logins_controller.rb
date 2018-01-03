@@ -9,7 +9,7 @@ class LoginsController < ApplicationController
 
   def create
     user = User.find_by_name current_user_name
-    passwd = '' 
+    passwd = ''
     # パスワードIDを文字列に変換
     params[:pass].split(',').each { |id|
         passwd += get_alphabet(id.to_i)
@@ -21,7 +21,7 @@ class LoginsController < ApplicationController
       redirect_to main_path
     else
       # flash変数にメッセージをセット
-      flash.now.alert = 'もう一度入力してください。'
+      flash.now.alert = 'もう一度入力してください'
       params[:pass] = ''
       render 'new'
     end

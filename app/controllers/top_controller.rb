@@ -12,7 +12,7 @@ class TopController < ApplicationController
       redirect_to login_path
     else
       # flash変数にメッセージをセット
-      flash.now.alert = 'もう一度入力してください。'
+      flash.now.alert = 'もう一度入力してください'
       render 'new'
     end
   end

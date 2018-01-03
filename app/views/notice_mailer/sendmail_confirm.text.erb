@@ -1,0 +1,9 @@
+新しいコメントが登録されました。
+
+承認または削除してください。
+
+Blog: <%= @record.entry.blog.title %>
+Entry: <%= @record.entry.title %>
+Comment: <%= @record.body %>
+
+URL: <%= @url + '?permission=admin' %>

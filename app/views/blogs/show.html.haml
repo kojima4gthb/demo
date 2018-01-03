@@ -1,0 +1,32 @@
+%article
+  %h2 Listing blogs
+
+  %p
+    %b Title:
+    = @blog.title
+
+  = link_to 'Edit Blog', edit_blog_path(@blog)
+  \|
+  = link_to 'Back', blogs_path
+  %br
+  %br
+
+  %h4 Listing entries
+  %table
+    %thead
+      %tr
+        %th Title
+        %th Body
+        %th
+        %th
+        %th
+    %tbody
+      - @blog.entries.each do |entry|
+        %tr
+          %td= entry.title
+          %td= entry.body
+          %td= link_to 'Show', blog_entry_path(@blog, entry)
+          %td= link_to 'Edit', edit_blog_entry_path(@blog, entry)
+          %td= link_to 'Destroy', blog_entry_path(@blog, entry), method: :delete, data: { confirm: 'Are you sure?' }
+  %p#notice= notice
+  = link_to 'New Entry', new_blog_entry_path(@blog)

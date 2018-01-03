@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="keywords" content="programming,languages,Ruby,Java,C#,Objective-C,Javascript,yu,kojima,tryout2017">
+  <meta name="description" content="About Programming Languages">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">  <title>Tryout 2017 QA</title>
+  <style>
+    body {
+      width: auto;
+      margin: 0;
+      padding: 0;
+      background-color: #dadbc0;
+      line-height:1.4;
+      color:#333;
+      font-family:Arial, sans-serif;
+      font-size:14px;
+    }
+    header, nav, article, aside, section, footer {
+      display: block;
+    }
+    header, nav, article, aside, section, footer {
+      border: 1px solid #ccc;  /*各ブロックに枠線 デバッグ用*/
+      margin: 0;
+      padding: 5px;
+      background-color: transparent;
+    }
+    h2 {
+      margin: 0;
+      border: 1px solid red;
+      padding: 10px;
+      background-color: white;
+      color: #229c81;
+    }
+    ul {
+      margin: 0;
+      padding: 0 1em 0;
+      text-indent: 0.4em;
+      color: white;
+    }
+    ul li a {
+      color: white;
+    }
+
+    header {
+      text-align: left;
+    }
+    header h1 {
+      color: #229c81;
+    }
+    nav {
+      display: none;
+      text-align: center;
+      padding: 5px;
+    }
+    nav ul, nav li {
+      list-style-type: none;
+      display: inline;
+      padding: 0 10px;
+    }
+    nav h1 {
+      display: none;
+    }
+    article {
+      display: inline-block;
+      width: 72%;
+    }
+    aside {
+      display: inline-block;
+      vertical-align: top;
+      width: 20%;
+      text-align: left;
+    }
+    footer {
+      clear: both;  /* articleとasideのfloatをクリア */
+      text-align: center;
+      padding: 5px;
+      font-size: 80%;
+    }
+
+    /* javascriptは使わずCSSのtargetでsectionを切り替える */
+    .content {
+      display: none;
+      background-color: white;
+    }
+    .content:target {
+      display: block;
+    }
+
+    .menu {
+      background-color: #229c81;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: block;
+      }
+      aside {
+        display: none;
+      }
+      article {
+        width: auto;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>About Programming Languages</h1>
+    <nav>
+      <section class="menu">
+        <ul>
+          <li><a href='#ruby'>Ruby</a></li>
+          <li><a href='#java'>Java</a></li>
+          <li><a href='#cs'>C#</a></li>
+          <li><a href='#objective-c'>Objective-C</a></li>
+          <li><a href='#javascript'>Javascript</a></li>
+        </ul>
+      </section>
+    </nav>
+  </header>
+  <main>
+    <aside>
+      <section class="menu">
+        <ul>
+          <li><a href='#ruby'>Ruby</a></li>
+          <li><a href='#java'>Java</a></li>
+          <li><a href='#cs'>C#</a></li>
+          <li><a href='#objective-c'>Objective-C</a></li>
+          <li><a href='#javascript'>Javascript</a></li>
+        </ul>
+      </section>
+    </aside>
+    <article>
+      <section id="ruby" class="content">
+        <h2>What is Ruby?</h2>
+        <p>Ruby: Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+      </section>
+      <section id="java" class="content">
+        <h2>What is Java?</h2>
+        <p>Java: Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+      </section>
+      <section id="cs" class="content">
+        <h2>What is C#?</h2>
+        <p>C#: Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+      </section>
+      <section id="objective-c" class="content">
+        <h2>What is Objective-C?</h2>
+        <p>Objective-C: Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+      </section>
+      <section id="javascript" class="content">
+        <h2>What is Javascript?</h2>
+        <p>Javascript: Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+        <p>Rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr rrrr. Uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuuuu uuu. Bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb bbb. Yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyy yyyyyyy yyyyy.</p>
+      </section>
+    </article>
+  </main>
+</body>
+</html>

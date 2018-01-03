@@ -10,26 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903064307) do
+ActiveRecord::Schema.define(version: 20171016155306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "inputs", force: :cascade do |t|
-    t.integer  "inputid"
-    t.binary   "icon"
+  create_table "blogs", id: :serial, force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "name",            limit: 256, null: false
-    t.string   "mail",            limit: 256
-    t.string   "password_digest", limit: 256, null: false
-    t.string   "remember_token",  limit: 256
-    t.string   "keys",            limit: 256
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+  create_table "comments", id: :serial, force: :cascade do |t|
+    t.text "body"
+    t.string "status"
+    t.integer "entry_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "entries", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "blog_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "mail"
+    t.string "password_digest"
+    t.string "remember_token"
+    t.string "keys"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

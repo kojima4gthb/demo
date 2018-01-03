@@ -15,13 +15,9 @@
 //= require turbolinks
 //= require_tree .
 
-function inputString(id) {
-    document.getElementById("disp").value += "●";
-    document.getElementById("pass").value += id + ",";
-    document.getElementById("disp").focus();
-}
-
-function resetPass() {
-    document.getElementById("pass").value = "";
-}
-
+// iOSでブラウザバックしても状態が保持されてしまう件の対応
+window.onpageshow = function(evt) {
+    if (evt.persisted) {
+        location.reload();
+    }
+};
